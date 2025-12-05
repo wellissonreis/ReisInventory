@@ -9,7 +9,6 @@ public class Forecast
     public decimal StockOutRisk { get; private set; }
     public DateTime CreatedAt { get; private set; }
 
-    // Navigation property
     public Product? Product { get; private set; }
 
     private Forecast() { } // EF Core

@@ -25,9 +25,6 @@ public class ForecastController : ControllerBase
         _logger = logger;
     }
 
-    /// <summary>
-    /// Obtém as previsões de um produto.
-    /// </summary>
     [HttpGet("{productId:guid}")]
     [ProducesResponseType(typeof(IEnumerable<ForecastResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -49,9 +46,6 @@ public class ForecastController : ControllerBase
         return Ok(response);
     }
 
-    /// <summary>
-    /// Obtém todas as previsões de alto risco.
-    /// </summary>
     [HttpGet("high-risk")]
     [ProducesResponseType(typeof(IEnumerable<ForecastResponse>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<ForecastResponse>>> GetHighRisk(

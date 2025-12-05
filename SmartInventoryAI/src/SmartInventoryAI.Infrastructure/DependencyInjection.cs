@@ -17,7 +17,6 @@ public static class DependencyInjection
         this IServiceCollection services, 
         IConfiguration configuration)
     {
-        // Database
         services.AddDbContext<SmartInventoryDbContext>(options =>
         {
             options.UseNpgsql(
@@ -29,17 +28,14 @@ public static class DependencyInjection
                 });
         });
 
-        // Repositories
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IStockHistoryRepository, StockHistoryRepository>();
         services.AddScoped<IForecastRepository, ForecastRepository>();
         services.AddScoped<IPurchaseSuggestionRepository, PurchaseSuggestionRepository>();
 
-        // Domain Services
         services.AddScoped<IForecastService, ForecastService>();
         services.AddScoped<IPurchaseSuggestionService, PurchaseSuggestionService>();
 
-        // Redis Cache
         var redisOptions = configuration.GetSection(RedisOptions.SectionName).Get<RedisOptions>() 
             ?? new RedisOptions();
         
@@ -49,7 +45,6 @@ public static class DependencyInjection
             options.InstanceName = redisOptions.InstanceName;
         });
 
-        // Ollama Client
         services.Configure<OllamaOptions>(configuration.GetSection(OllamaOptions.SectionName));
         
         var ollamaOptions = configuration.GetSection(OllamaOptions.SectionName).Get<OllamaOptions>() 
@@ -61,7 +56,6 @@ public static class DependencyInjection
             client.Timeout = TimeSpan.FromSeconds(ollamaOptions.TimeoutSeconds);
         });
 
-        // Observability
         services.AddObservability(configuration);
 
         return services;

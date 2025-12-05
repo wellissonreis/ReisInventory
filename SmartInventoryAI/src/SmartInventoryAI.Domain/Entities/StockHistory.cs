@@ -8,7 +8,6 @@ public class StockHistory
     public int QuantityChange { get; private set; }
     public string Reason { get; private set; } = string.Empty;
 
-    // Navigation property
     public Product? Product { get; private set; }
 
     private StockHistory() { } // EF Core

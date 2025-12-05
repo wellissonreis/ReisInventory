@@ -22,9 +22,6 @@ public class ProductsController : ControllerBase
         _logger = logger;
     }
 
-    /// <summary>
-    /// Lista todos os produtos.
-    /// </summary>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<ProductResponse>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<ProductResponse>>> GetAll(
@@ -38,9 +35,6 @@ public class ProductsController : ControllerBase
         return Ok(response);
     }
 
-    /// <summary>
-    /// Obtém um produto pelo ID.
-    /// </summary>
     [HttpGet("{id:guid}")]
     [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -61,9 +55,6 @@ public class ProductsController : ControllerBase
         return Ok(MapToResponse(product));
     }
 
-    /// <summary>
-    /// Obtém um produto pelo SKU.
-    /// </summary>
     [HttpGet("sku/{sku}")]
     [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -84,9 +75,6 @@ public class ProductsController : ControllerBase
         return Ok(MapToResponse(product));
     }
 
-    /// <summary>
-    /// Lista produtos com estoque baixo.
-    /// </summary>
     [HttpGet("low-stock")]
     [ProducesResponseType(typeof(IEnumerable<ProductResponse>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<ProductResponse>>> GetLowStock(
@@ -100,9 +88,6 @@ public class ProductsController : ControllerBase
         return Ok(response);
     }
 
-    /// <summary>
-    /// Cria um novo produto.
-    /// </summary>
     [HttpPost]
     [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -113,7 +98,6 @@ public class ProductsController : ControllerBase
     {
         _logger.LogInformation("Creating product with SKU {Sku}", request.Sku);
 
-        // Check if SKU already exists
         var existingProduct = await _productRepository.GetBySkuAsync(request.Sku, cancellationToken);
         if (existingProduct != null)
         {
@@ -147,9 +131,6 @@ public class ProductsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Atualiza um produto existente.
-    /// </summary>
     [HttpPut("{id:guid}")]
     [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -190,9 +171,6 @@ public class ProductsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Remove um produto.
-    /// </summary>
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

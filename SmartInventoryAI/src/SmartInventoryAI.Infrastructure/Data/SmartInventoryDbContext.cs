@@ -19,7 +19,6 @@ public class SmartInventoryDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // Product configuration
         modelBuilder.Entity<Product>(entity =>
         {
             entity.ToTable("products");
@@ -39,7 +38,6 @@ public class SmartInventoryDbContext : DbContext
             entity.HasIndex(e => e.Category);
         });
 
-        // StockHistory configuration
         modelBuilder.Entity<StockHistory>(entity =>
         {
             entity.ToTable("stock_histories");
@@ -61,7 +59,6 @@ public class SmartInventoryDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
-        // Forecast configuration
         modelBuilder.Entity<Forecast>(entity =>
         {
             entity.ToTable("forecasts");
@@ -85,7 +82,6 @@ public class SmartInventoryDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
-        // PurchaseSuggestion configuration
         modelBuilder.Entity<PurchaseSuggestion>(entity =>
         {
             entity.ToTable("purchase_suggestions");

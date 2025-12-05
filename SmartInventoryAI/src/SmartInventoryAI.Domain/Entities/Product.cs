@@ -12,7 +12,6 @@ public class Product
     public DateTime CreatedAt { get; private set; }
     public DateTime UpdatedAt { get; private set; }
 
-    // Navigation properties
     public ICollection<StockHistory> StockHistories { get; private set; } = new List<StockHistory>();
     public ICollection<Forecast> Forecasts { get; private set; } = new List<Forecast>();
     public ICollection<PurchaseSuggestion> PurchaseSuggestions { get; private set; } = new List<PurchaseSuggestion>();

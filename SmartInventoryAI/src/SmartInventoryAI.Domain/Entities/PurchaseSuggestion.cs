@@ -8,7 +8,6 @@ public class PurchaseSuggestion
     public string Justification { get; private set; } = string.Empty;
     public DateTime CreatedAt { get; private set; }
 
-    // Navigation property
     public Product? Product { get; private set; }
 
     private PurchaseSuggestion() { } // EF Core

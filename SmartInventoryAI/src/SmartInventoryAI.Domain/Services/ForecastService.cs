@@ -12,18 +12,16 @@ public class ForecastService : IForecastService
         int forecastDays = 7)
     {
         var historyList = stockHistory
-            .Where(h => h.QuantityChange < 0) // Only consider outbound (sales)
+            .Where(h => h.QuantityChange < 0)
             .OrderByDescending(h => h.Date)
             .Take(DefaultMovingAverageDays * 2)
             .ToList();
 
         if (historyList.Count == 0)
         {
-            // No history, return zero demand forecasts
             return GenerateZeroDemandForecasts(product.Id, forecastDays);
         }
 
-        // Calculate average daily demand using moving average
         var dailyDemands = historyList
             .GroupBy(h => h.Date.Date)
             .Select(g => Math.Abs(g.Sum(h => h.QuantityChange)))
@@ -41,7 +39,6 @@ public class ForecastService : IForecastService
             var targetDate = today.AddDays(i);
             var predictedDemand = averageDailyDemand;
             
-            // Calculate cumulative demand up to this day
             var cumulativeDemand = averageDailyDemand * i;
             var stockOutRisk = CalculateStockOutRisk(
                 product.CurrentStock, 
@@ -77,12 +74,10 @@ public class ForecastService : IForecastService
 
         if (projectedStock <= safetyStock)
         {
-            // Risk increases as we approach safety stock
             var ratio = (decimal)projectedStock / safetyStock;
             return Math.Max(0, Math.Min(1, 1 - ratio + 0.3m));
         }
 
-        // Buffer calculation: how many days of stock remain
         var daysOfStock = predictedDemand > 0 
             ? (decimal)projectedStock / (predictedDemand > 0 ? predictedDemand : 1) 
             : 30;
@@ -92,7 +87,6 @@ public class ForecastService : IForecastService
             return Math.Max(0.3m, Math.Min(0.7m, (decimal)leadTimeDays / daysOfStock * 0.3m));
         }
 
-        // Low risk if we have enough buffer
         return Math.Max(0, Math.Min(0.3m, (decimal)leadTimeDays / daysOfStock * 0.1m));
     }
 

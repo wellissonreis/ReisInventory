@@ -9,18 +9,15 @@ public class ForecastTests
     [Fact]
     public void Create_WithValidData_ReturnsForecast()
     {
-        // Arrange
         var productId = Guid.NewGuid();
         var targetDate = DateTime.UtcNow.AddDays(1);
 
-        // Act
         var forecast = Forecast.Create(
             productId: productId,
             targetDate: targetDate,
             predictedDemand: 100,
             stockOutRisk: 0.5m);
 
-        // Assert
         forecast.Should().NotBeNull();
         forecast.Id.Should().NotBe(Guid.Empty);
         forecast.ProductId.Should().Be(productId);
@@ -32,7 +29,6 @@ public class ForecastTests
     [Fact]
     public void Create_WithEmptyProductId_ThrowsArgumentException()
     {
-        // Act & Assert
         var act = () => Forecast.Create(
             productId: Guid.Empty,
             targetDate: DateTime.UtcNow.AddDays(1),
@@ -46,7 +42,6 @@ public class ForecastTests
     [Fact]
     public void Create_WithNegativeDemand_ThrowsArgumentException()
     {
-        // Act & Assert
         var act = () => Forecast.Create(
             productId: Guid.NewGuid(),
             targetDate: DateTime.UtcNow.AddDays(1),
@@ -62,7 +57,6 @@ public class ForecastTests
     [InlineData(1.1)]
     public void Create_WithInvalidRisk_ThrowsArgumentException(decimal risk)
     {
-        // Act & Assert
         var act = () => Forecast.Create(
             productId: Guid.NewGuid(),
             targetDate: DateTime.UtcNow.AddDays(1),
@@ -81,14 +75,12 @@ public class ForecastTests
     [InlineData(0.5, false)]
     public void IsHighRisk_ReturnsCorrectValue(decimal risk, bool expected)
     {
-        // Arrange
         var forecast = Forecast.Create(
             productId: Guid.NewGuid(),
             targetDate: DateTime.UtcNow.AddDays(1),
             predictedDemand: 100,
             stockOutRisk: risk);
 
-        // Act & Assert
         forecast.IsHighRisk().Should().Be(expected);
     }
 
@@ -100,14 +92,12 @@ public class ForecastTests
     [InlineData(0.7, false)]
     public void IsMediumRisk_ReturnsCorrectValue(decimal risk, bool expected)
     {
-        // Arrange
         var forecast = Forecast.Create(
             productId: Guid.NewGuid(),
             targetDate: DateTime.UtcNow.AddDays(1),
             predictedDemand: 100,
             stockOutRisk: risk);
 
-        // Act & Assert
         forecast.IsMediumRisk().Should().Be(expected);
     }
 }

@@ -9,7 +9,6 @@ public class ProductTests
     [Fact]
     public void Create_WithValidData_ReturnsProduct()
     {
-        // Act
         var product = Product.Create(
             sku: "SKU-001",
             name: "Test Product",
@@ -18,7 +17,6 @@ public class ProductTests
             safetyStock: 20,
             leadTimeDays: 5);
 
-        // Assert
         product.Should().NotBeNull();
         product.Id.Should().NotBe(Guid.Empty);
         product.Sku.Should().Be("SKU-001");
@@ -33,7 +31,6 @@ public class ProductTests
     [Fact]
     public void Create_WithEmptySku_ThrowsArgumentException()
     {
-        // Act & Assert
         var act = () => Product.Create(
             sku: "",
             name: "Test Product",
@@ -49,7 +46,6 @@ public class ProductTests
     [Fact]
     public void Create_WithEmptyName_ThrowsArgumentException()
     {
-        // Act & Assert
         var act = () => Product.Create(
             sku: "SKU-001",
             name: "",
@@ -65,7 +61,6 @@ public class ProductTests
     [Fact]
     public void Create_WithNegativeSafetyStock_ThrowsArgumentException()
     {
-        // Act & Assert
         var act = () => Product.Create(
             sku: "SKU-001",
             name: "Test Product",
@@ -81,7 +76,6 @@ public class ProductTests
     [Fact]
     public void IsLowStock_WhenStockBelowSafety_ReturnsTrue()
     {
-        // Arrange
         var product = Product.Create(
             sku: "SKU-001",
             name: "Test Product",
@@ -90,14 +84,12 @@ public class ProductTests
             safetyStock: 20,
             leadTimeDays: 5);
 
-        // Act & Assert
         product.IsLowStock().Should().BeTrue();
     }
 
     [Fact]
     public void IsLowStock_WhenStockAboveSafety_ReturnsFalse()
     {
-        // Arrange
         var product = Product.Create(
             sku: "SKU-001",
             name: "Test Product",
@@ -106,14 +98,12 @@ public class ProductTests
             safetyStock: 20,
             leadTimeDays: 5);
 
-        // Act & Assert
         product.IsLowStock().Should().BeFalse();
     }
 
     [Fact]
     public void UpdateStock_UpdatesCurrentStockAndTimestamp()
     {
-        // Arrange
         var product = Product.Create(
             sku: "SKU-001",
             name: "Test Product",
@@ -124,11 +114,9 @@ public class ProductTests
 
         var originalUpdatedAt = product.UpdatedAt;
 
-        // Act
-        Thread.Sleep(10); // Ensure time difference
+        Thread.Sleep(10);
         product.UpdateStock(150);
 
-        // Assert
         product.CurrentStock.Should().Be(150);
         product.UpdatedAt.Should().BeAfter(originalUpdatedAt);
     }

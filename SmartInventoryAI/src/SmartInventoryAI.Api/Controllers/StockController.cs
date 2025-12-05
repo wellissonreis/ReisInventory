@@ -25,9 +25,6 @@ public class StockController : ControllerBase
         _logger = logger;
     }
 
-    /// <summary>
-    /// Obtém o histórico de movimentação de um produto.
-    /// </summary>
     [HttpGet("history/{productId:guid}")]
     [ProducesResponseType(typeof(IEnumerable<StockHistoryResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -49,9 +46,6 @@ public class StockController : ControllerBase
         return Ok(response);
     }
 
-    /// <summary>
-    /// Obtém o histórico de movimentação de um produto nos últimos N dias.
-    /// </summary>
     [HttpGet("history/{productId:guid}/recent")]
     [ProducesResponseType(typeof(IEnumerable<StockHistoryResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -74,9 +68,6 @@ public class StockController : ControllerBase
         return Ok(response);
     }
 
-    /// <summary>
-    /// Registra uma movimentação de estoque.
-    /// </summary>
     [HttpPost("history")]
     [ProducesResponseType(typeof(StockHistoryResponse), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -106,7 +97,6 @@ public class StockController : ControllerBase
 
             await _stockHistoryRepository.AddAsync(stockHistory, cancellationToken);
 
-            // Update product current stock
             var newStock = product.CurrentStock + request.QuantityChange;
             product.UpdateStock(newStock);
             await _productRepository.UpdateAsync(product, cancellationToken);

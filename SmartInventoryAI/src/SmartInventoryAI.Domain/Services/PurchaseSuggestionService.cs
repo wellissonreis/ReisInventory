@@ -14,7 +14,6 @@ public class PurchaseSuggestionService : IPurchaseSuggestionService
         if (forecastList.Count == 0)
             return null;
 
-        // Check if any forecast has high risk
         var hasHighRisk = forecastList.Any(f => f.StockOutRisk >= HighRiskThreshold);
         
         if (!hasHighRisk && product.CurrentStock > product.SafetyStock)
@@ -46,13 +45,11 @@ public class PurchaseSuggestionService : IPurchaseSuggestionService
         int currentStock, 
         int leadTimeDays)
     {
-        // Calculate reorder point
         var reorderPoint = (averageDailyDemand * leadTimeDays) + safetyStock;
         
         if (currentStock >= reorderPoint)
             return 0;
 
-        // Order enough to cover lead time plus safety buffer
         var leadTimeDemand = averageDailyDemand * leadTimeDays;
         var targetStock = safetyStock + (leadTimeDemand * MinimumOrderMultiplier);
         var orderQuantity = targetStock - currentStock;

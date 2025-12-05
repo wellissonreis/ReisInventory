@@ -17,60 +17,48 @@ public class PurchaseSuggestionServiceTests
     [Fact]
     public void GenerateSuggestion_WithEmptyForecasts_ReturnsNull()
     {
-        // Arrange
         var product = CreateTestProduct(currentStock: 100);
         var emptyForecasts = Enumerable.Empty<Forecast>();
 
-        // Act
         var suggestion = _sut.GenerateSuggestion(product, emptyForecasts);
 
-        // Assert
         suggestion.Should().BeNull();
     }
 
     [Fact]
     public void GenerateSuggestion_WithLowRiskAndAdequateStock_ReturnsNull()
     {
-        // Arrange
         var product = CreateTestProduct(currentStock: 100, safetyStock: 20);
         var forecasts = CreateForecasts(product.Id, predictedDemand: 10, stockOutRisk: 0.2m, days: 7);
 
-        // Act
         var suggestion = _sut.GenerateSuggestion(product, forecasts);
 
-        // Assert
         suggestion.Should().BeNull();
     }
 
     [Fact]
     public void GenerateSuggestion_WithHighRisk_ReturnsSuggestion()
     {
-        // Arrange
         var product = CreateTestProduct(currentStock: 15, safetyStock: 20, leadTimeDays: 5);
         var forecasts = CreateForecasts(product.Id, predictedDemand: 10, stockOutRisk: 0.7m, days: 7);
 
-        // Act
         var suggestion = _sut.GenerateSuggestion(product, forecasts);
 
-        // Assert
         suggestion.Should().NotBeNull();
         suggestion!.ProductId.Should().Be(product.Id);
         suggestion.SuggestedQuantity.Should().BeGreaterThan(0);
         suggestion.Justification.Should().NotBeEmpty();
-        suggestion.Justification.Should().Contain("ALTO"); // High risk
+        suggestion.Justification.Should().Contain("ALTO");
     }
 
     [Fact]
     public void GenerateSuggestion_WithLowStockBelowSafety_ReturnsSuggestion()
     {
-        // Arrange
         var product = CreateTestProduct(currentStock: 10, safetyStock: 50, leadTimeDays: 5);
         var forecasts = CreateForecasts(product.Id, predictedDemand: 10, stockOutRisk: 0.3m, days: 7);
 
-        // Act
         var suggestion = _sut.GenerateSuggestion(product, forecasts);
 
-        // Assert
         suggestion.Should().NotBeNull();
         suggestion!.SuggestedQuantity.Should().BeGreaterThan(0);
     }
@@ -78,14 +66,11 @@ public class PurchaseSuggestionServiceTests
     [Fact]
     public void GenerateSuggestion_Justification_ContainsRelevantInfo()
     {
-        // Arrange
         var product = CreateTestProduct(currentStock: 15, safetyStock: 30, leadTimeDays: 7);
         var forecasts = CreateForecasts(product.Id, predictedDemand: 20, stockOutRisk: 0.8m, days: 7);
 
-        // Act
         var suggestion = _sut.GenerateSuggestion(product, forecasts);
 
-        // Assert
         suggestion.Should().NotBeNull();
         suggestion!.Justification.Should().Contain("Estoque atual:");
         suggestion.Justification.Should().Contain("Estoque de segurança:");
@@ -96,45 +81,33 @@ public class PurchaseSuggestionServiceTests
     [Fact]
     public void CalculateOrderQuantity_WhenStockBelowReorderPoint_ReturnsPositiveQuantity()
     {
-        // Arrange
         var averageDailyDemand = 10;
         var safetyStock = 20;
         var currentStock = 30;
         var leadTimeDays = 5;
 
-        // Reorder point = (10 * 5) + 20 = 70
-        // Current stock (30) < Reorder point (70)
-
-        // Act
         var quantity = _sut.CalculateOrderQuantity(averageDailyDemand, safetyStock, currentStock, leadTimeDays);
 
-        // Assert
         quantity.Should().BeGreaterThan(0);
     }
 
     [Fact]
     public void CalculateOrderQuantity_WhenStockAboveReorderPoint_ReturnsZero()
     {
-        // Arrange
         var averageDailyDemand = 10;
         var safetyStock = 20;
         var currentStock = 200;
         var leadTimeDays = 5;
 
-        // Reorder point = (10 * 5) + 20 = 70
-        // Current stock (200) > Reorder point (70)
-
-        // Act
         var quantity = _sut.CalculateOrderQuantity(averageDailyDemand, safetyStock, currentStock, leadTimeDays);
 
-        // Assert
         quantity.Should().Be(0);
     }
 
     [Theory]
-    [InlineData(10, 20, 30, 5, 120)] // Need to order to reach target
-    [InlineData(5, 10, 100, 3, 0)]   // Already have enough stock
-    [InlineData(20, 50, 10, 7, 320)] // Very low stock, high demand
+    [InlineData(10, 20, 30, 5, 120)]
+    [InlineData(5, 10, 100, 3, 0)]
+    [InlineData(20, 50, 10, 7, 320)]
     public void CalculateOrderQuantity_VariousScenarios_ReturnsExpectedQuantity(
         int averageDailyDemand,
         int safetyStock,
@@ -142,13 +115,11 @@ public class PurchaseSuggestionServiceTests
         int leadTimeDays,
         int expectedMinQuantity)
     {
-        // Act
         var quantity = _sut.CalculateOrderQuantity(averageDailyDemand, safetyStock, currentStock, leadTimeDays);
 
-        // Assert
         if (expectedMinQuantity > 0)
         {
-            quantity.Should().BeGreaterThanOrEqualTo(expectedMinQuantity - 50); // Allow some variance
+            quantity.Should().BeGreaterThanOrEqualTo(expectedMinQuantity - 50);
         }
         else
         {
@@ -159,14 +130,11 @@ public class PurchaseSuggestionServiceTests
     [Fact]
     public void GenerateSuggestion_WithZeroDemand_ReturnsNull()
     {
-        // Arrange
         var product = CreateTestProduct(currentStock: 100);
         var forecasts = CreateForecasts(product.Id, predictedDemand: 0, stockOutRisk: 0, days: 7);
 
-        // Act
         var suggestion = _sut.GenerateSuggestion(product, forecasts);
 
-        // Assert
         suggestion.Should().BeNull();
     }
 

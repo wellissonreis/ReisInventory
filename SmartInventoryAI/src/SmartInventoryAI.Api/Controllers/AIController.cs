@@ -36,9 +36,6 @@ public partial class AIController : ControllerBase
         _logger = logger;
     }
 
-    /// <summary>
-    /// Obtém sugestão de IA para um produto específico.
-    /// </summary>
     [HttpGet("suggestions/{productId:guid}")]
     [ProducesResponseType(typeof(AISuggestionResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -57,13 +54,10 @@ public partial class AIController : ControllerBase
         var forecasts = await _forecastRepository.GetLatestByProductIdAsync(productId, 7, cancellationToken);
         var forecastList = forecasts.ToList();
 
-        // Get AI advice
         var aiAdvice = await _ollamaClient.GetInventoryAdviceAsync(product, forecastList, cancellationToken);
 
-        // Try to extract suggested quantity from AI response (simple regex)
         int? suggestedQuantity = ExtractSuggestedQuantity(aiAdvice);
 
-        // If AI couldn't provide quantity, use domain service
         if (!suggestedQuantity.HasValue && forecastList.Any())
         {
             var suggestion = _purchaseSuggestionService.GenerateSuggestion(product, forecastList);
@@ -80,9 +74,6 @@ public partial class AIController : ControllerBase
         return Ok(response);
     }
 
-    /// <summary>
-    /// Obtém a última sugestão de compra salva para um produto.
-    /// </summary>
     [HttpGet("suggestions/{productId:guid}/latest")]
     [ProducesResponseType(typeof(AISuggestionResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -114,9 +105,6 @@ public partial class AIController : ControllerBase
         return Ok(response);
     }
 
-    /// <summary>
-    /// Verifica se o serviço de IA está disponível.
-    /// </summary>
     [HttpGet("health")]
     [ProducesResponseType(typeof(object), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(object), StatusCodes.Status503ServiceUnavailable)]
@@ -134,7 +122,6 @@ public partial class AIController : ControllerBase
 
     private static int? ExtractSuggestedQuantity(string aiResponse)
     {
-        // Simple regex to find numbers associated with quantity recommendations
         var patterns = new[]
         {
             @"(?:quantidade|quantia|comprar|pedir|solicitar|recomendar?o?)[\s:]*(\d+)",

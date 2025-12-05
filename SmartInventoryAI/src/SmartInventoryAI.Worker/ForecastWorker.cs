@@ -86,13 +86,11 @@ public class ForecastWorker : BackgroundService
 
                 _logger.LogDebug("Processing forecasts for product {ProductId} ({ProductName})", product.Id, product.Name);
 
-                // Get recent stock history
                 var stockHistory = await stockHistoryRepository.GetRecentByProductIdAsync(
                     product.Id, 
                     _options.HistoryDays, 
                     cancellationToken);
 
-                // Generate forecasts
                 var forecasts = forecastService.GenerateForecasts(
                     product, 
                     stockHistory, 
@@ -111,7 +109,6 @@ public class ForecastWorker : BackgroundService
                         product.Id);
                 }
 
-                // Generate purchase suggestions if enabled
                 if (_options.GeneratePurchaseSuggestions && forecastList.Any())
                 {
                     var suggestion = purchaseSuggestionService.GenerateSuggestion(product, forecastList);
@@ -150,7 +147,6 @@ public class ForecastWorker : BackgroundService
             suggestionCount,
             stopwatch.ElapsedMilliseconds);
 
-        // Cleanup old forecasts (older than 30 days)
         try
         {
             var cutoffDate = DateTime.UtcNow.AddDays(-30);

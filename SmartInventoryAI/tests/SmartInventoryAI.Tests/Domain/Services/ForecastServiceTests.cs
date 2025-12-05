@@ -17,14 +17,11 @@ public class ForecastServiceTests
     [Fact]
     public void GenerateForecasts_WithNoHistory_ReturnsZeroDemandForecasts()
     {
-        // Arrange
         var product = CreateTestProduct(currentStock: 100, safetyStock: 20);
         var emptyHistory = Enumerable.Empty<StockHistory>();
 
-        // Act
         var forecasts = _sut.GenerateForecasts(product, emptyHistory, forecastDays: 7);
 
-        // Assert
         var forecastList = forecasts.ToList();
         forecastList.Should().HaveCount(7);
         forecastList.Should().AllSatisfy(f =>
@@ -37,14 +34,11 @@ public class ForecastServiceTests
     [Fact]
     public void GenerateForecasts_WithSalesHistory_CalculatesAverageDemand()
     {
-        // Arrange
         var product = CreateTestProduct(currentStock: 100, safetyStock: 20);
         var history = CreateSalesHistory(product.Id, dailySales: 10, days: 7);
 
-        // Act
         var forecasts = _sut.GenerateForecasts(product, history, forecastDays: 7);
 
-        // Assert
         var forecastList = forecasts.ToList();
         forecastList.Should().HaveCount(7);
         forecastList.Should().AllSatisfy(f =>
@@ -57,18 +51,14 @@ public class ForecastServiceTests
     [Fact]
     public void GenerateForecasts_WithLowStock_CalculatesHighRisk()
     {
-        // Arrange
         var product = CreateTestProduct(currentStock: 15, safetyStock: 20, leadTimeDays: 5);
         var history = CreateSalesHistory(product.Id, dailySales: 10, days: 7);
 
-        // Act
         var forecasts = _sut.GenerateForecasts(product, history, forecastDays: 7);
 
-        // Assert
         var forecastList = forecasts.ToList();
         forecastList.Should().HaveCount(7);
         
-        // Later days should have higher risk due to cumulative demand
         var laterForecast = forecastList.Last();
         laterForecast.StockOutRisk.Should().BeGreaterThan(0.5m);
     }
@@ -76,14 +66,11 @@ public class ForecastServiceTests
     [Fact]
     public void GenerateForecasts_WithAbundantStock_CalculatesLowRisk()
     {
-        // Arrange
         var product = CreateTestProduct(currentStock: 1000, safetyStock: 50, leadTimeDays: 5);
         var history = CreateSalesHistory(product.Id, dailySales: 10, days: 7);
 
-        // Act
         var forecasts = _sut.GenerateForecasts(product, history, forecastDays: 7);
 
-        // Assert
         var forecastList = forecasts.ToList();
         forecastList.Should().AllSatisfy(f =>
         {
@@ -92,9 +79,9 @@ public class ForecastServiceTests
     }
 
     [Theory]
-    [InlineData(0, 10, 50, 5, 1.0)] // Zero stock = maximum risk
-    [InlineData(100, 10, 50, 5, 0.0)] // High stock, low demand
-    [InlineData(20, 10, 50, 5, 1.0)] // Stock below predicted demand
+    [InlineData(0, 10, 50, 5, 1.0)]
+    [InlineData(100, 10, 50, 5, 0.0)]
+    [InlineData(20, 10, 50, 5, 1.0)]
     public void CalculateStockOutRisk_VariousScenarios_ReturnsExpectedRisk(
         int currentStock,
         int safetyStock,
@@ -102,10 +89,8 @@ public class ForecastServiceTests
         int leadTimeDays,
         decimal expectedMinRisk)
     {
-        // Act
         var risk = _sut.CalculateStockOutRisk(currentStock, safetyStock, predictedDemand, leadTimeDays);
 
-        // Assert
         risk.Should().BeGreaterThanOrEqualTo(expectedMinRisk - 0.1m);
         risk.Should().BeInRange(0, 1);
     }
@@ -113,7 +98,6 @@ public class ForecastServiceTests
     [Fact]
     public void CalculateStockOutRisk_AlwaysReturnsBetweenZeroAndOne()
     {
-        // Arrange & Act & Assert
         var scenarios = new[]
         {
             (currentStock: 0, safetyStock: 10, predictedDemand: 100, leadTimeDays: 5),
@@ -156,7 +140,7 @@ public class ForecastServiceTests
         {
             history.Add(StockHistory.Create(
                 productId,
-                quantityChange: -dailySales, // Negative for sales
+                quantityChange: -dailySales,
                 reason: "sale",
                 date: today.AddDays(-i)));
         }
