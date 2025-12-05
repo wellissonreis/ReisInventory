@@ -15,8 +15,8 @@ SmartInventoryAI é uma solução SaaS para gestão inteligente de estoque que u
 
 | Componente | Tecnologia |
 |------------|------------|
-| Backend API | ASP.NET Core 9.0 Web API |
-| Worker | .NET 9.0 BackgroundService |
+| Backend API | ASP.NET Core 10.0 Web API |
+| Worker | .NET 10.0 BackgroundService |
 | Banco de Dados | PostgreSQL 16 |
 | Cache | Redis 7 |
 | Observabilidade | OpenTelemetry + Jaeger |
@@ -59,7 +59,7 @@ SmartInventoryAI/
 
 ### Pré-requisitos
 
-- [.NET 9.0 SDK](https://dotnet.microsoft.com/download)
+- [.NET 10.0 SDK](https://dotnet.microsoft.com/download)
 - [Docker](https://www.docker.com/get-started) e Docker Compose
 - (Opcional) GPU NVIDIA para melhor performance do Ollama
 
@@ -229,4 +229,4 @@ Contribuições são bem-vindas! Por favor, abra uma issue ou pull request.
 
 ---
 
-Desenvolvido com ❤️ usando .NET 9.0 e Clean Architecture
+Desenvolvido com ❤️ usando .NET 10.0 e Clean Architecture
