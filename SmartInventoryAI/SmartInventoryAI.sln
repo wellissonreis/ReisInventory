@@ -1,0 +1,55 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{SRC00000-0000-0000-0000-000000000001}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{TEST0000-0000-0000-0000-000000000001}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartInventoryAI.Api", "src\SmartInventoryAI.Api\SmartInventoryAI.Api.csproj", "{API00000-0000-0000-0000-000000000001}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartInventoryAI.Worker", "src\SmartInventoryAI.Worker\SmartInventoryAI.Worker.csproj", "{WORKER00-0000-0000-0000-000000000001}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartInventoryAI.Domain", "src\SmartInventoryAI.Domain\SmartInventoryAI.Domain.csproj", "{DOMAIN00-0000-0000-0000-000000000001}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartInventoryAI.Infrastructure", "src\SmartInventoryAI.Infrastructure\SmartInventoryAI.Infrastructure.csproj", "{INFRA000-0000-0000-0000-000000000001}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartInventoryAI.Tests", "tests\SmartInventoryAI.Tests\SmartInventoryAI.Tests.csproj", "{TESTS000-0000-0000-0000-000000000001}"
+EndProject
+
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{API00000-0000-0000-0000-000000000001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{API00000-0000-0000-0000-000000000001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{API00000-0000-0000-0000-000000000001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{API00000-0000-0000-0000-000000000001}.Release|Any CPU.Build.0 = Release|Any CPU
+		{WORKER00-0000-0000-0000-000000000001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{WORKER00-0000-0000-0000-000000000001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{WORKER00-0000-0000-0000-000000000001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{WORKER00-0000-0000-0000-000000000001}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DOMAIN00-0000-0000-0000-000000000001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DOMAIN00-0000-0000-0000-000000000001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DOMAIN00-0000-0000-0000-000000000001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DOMAIN00-0000-0000-0000-000000000001}.Release|Any CPU.Build.0 = Release|Any CPU
+		{INFRA000-0000-0000-0000-000000000001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{INFRA000-0000-0000-0000-000000000001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{INFRA000-0000-0000-0000-000000000001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{INFRA000-0000-0000-0000-000000000001}.Release|Any CPU.Build.0 = Release|Any CPU
+		{TESTS000-0000-0000-0000-000000000001}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{TESTS000-0000-0000-0000-000000000001}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{TESTS000-0000-0000-0000-000000000001}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{TESTS000-0000-0000-0000-000000000001}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{API00000-0000-0000-0000-000000000001} = {SRC00000-0000-0000-0000-000000000001}
+		{WORKER00-0000-0000-0000-000000000001} = {SRC00000-0000-0000-0000-000000000001}
+		{DOMAIN00-0000-0000-0000-000000000001} = {SRC00000-0000-0000-0000-000000000001}
+		{INFRA000-0000-0000-0000-000000000001} = {SRC00000-0000-0000-0000-000000000001}
+		{TESTS000-0000-0000-0000-000000000001} = {TEST0000-0000-0000-0000-000000000001}
+	EndGlobalSection
+EndGlobal

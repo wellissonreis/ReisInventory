@@ -1,0 +1,52 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    container_name: reis-inventory-app
+    depends_on:
+      db:
+        condition: service_healthy
+      ollama:
+        condition: service_started
+    environment:
+      ConnectionStrings__Default: "Host=db;Port=5432;Database=reis_inventory;Username=postgres;Password=postgres"
+      DB_HOST: db
+      DB_PORT: 5432
+      OLLAMA_HOST: ollama
+      OLLAMA_PORT: 11434
+      ASPNETCORE_URLS: "http://0.0.0.0:8080"
+    ports:
+      - "5000:8080"
+    restart: unless-stopped
+
+  db:
+    image: postgres:16
+    container_name: reis-inventory-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: reis_inventory
+    ports:
+      - "89:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d reis_inventory"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  ollama_data:
