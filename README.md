@@ -1,23 +1,22 @@
 # Reis Inventory
 
-**Sistema de Gest„o de Estoque Inteligente com IA**
+**Sistema de Gest√£o de Estoque Inteligente com IA**
 
 ![.NET](https://img.shields.io/badge/.NET-10.0-512BD4?style=flat&logo=dotnet)
-![License](https://img.shields.io/badge/license-MIT-green)
 
 ## ?? Sobre o Projeto
 
-Reis Inventory È uma plataforma completa de gest„o de estoque que utiliza InteligÍncia Artificial para otimizar operaÁıes de invent·rio. O sistema oferece previsıes de demanda, identificaÁ„o de riscos de ruptura e sugestıes autom·ticas de compra.
+Reis Inventory √© uma plataforma completa de gest√£o de estoque que utiliza Intelig√™ncia Artificial para otimizar opera√ß√µes de invent√°rio. O sistema oferece previs√µes de demanda, identifica√ß√£o de riscos de ruptura e sugest√µes autom√°ticas de compra.
 
 ### ? Principais Funcionalidades
 
-- ?? **Previs„o de Demanda** - Algoritmos de ML para prever demanda futura
-- ?? **Alertas de Ruptura** - IdentificaÁ„o proativa de riscos de falta de estoque
-- ?? **Sugestıes de Compra** - RecomendaÁıes autom·ticas de quantidades a comprar
-- ?? **Agente de IA** - An·lises e insights via Ollama (LLM local)
+- ?? **Previs√£o de Demanda** - Algoritmos de ML para prever demanda futura
+- ?? **Alertas de Ruptura** - Identifica√ß√£o proativa de riscos de falta de estoque
+- ?? **Sugest√µes de Compra** - Recomenda√ß√µes autom√°ticas de quantidades a comprar
+- ?? **Agente de IA** - An√°lises e insights via Ollama (LLM local)
 - ?? **Observabilidade** - Monitoramento completo com OpenTelemetry e Jaeger
 
-## ??? Stack TecnolÛgica
+## ??? Stack Tecnol√≥gica
 
 | Componente | Tecnologia |
 |------------|------------|
@@ -27,28 +26,28 @@ Reis Inventory È uma plataforma completa de gest„o de estoque que utiliza Inteli
 | **Cache** | Redis 7 |
 | **Observabilidade** | OpenTelemetry + Jaeger |
 | **IA/LLM** | Ollama (mistral:7b) |
-| **ContainerizaÁ„o** | Docker Compose |
+| **Containeriza√ß√£o** | Docker Compose |
 
-## ?? Estrutura do RepositÛrio
+## ?? Estrutura do Reposit√≥rio
 
 ```
 reis-inventory/
-??? SmartInventoryAI/           # SoluÁ„o principal
+??? SmartInventoryAI/           # Solu√ß√£o principal
 ?   ??? src/
 ?   ?   ??? SmartInventoryAI.Api/           # API REST
-?   ?   ??? SmartInventoryAI.Domain/        # Entidades e regras de negÛcio
-?   ?   ??? SmartInventoryAI.Infrastructure/# RepositÛrios e serviÁos externos
-?   ?   ??? SmartInventoryAI.Worker/        # ServiÁo de background
+?   ?   ??? SmartInventoryAI.Domain/        # Entidades e regras de neg√≥cio
+?   ?   ??? SmartInventoryAI.Infrastructure/# Reposit√≥rios e servi√ßos externos
+?   ?   ??? SmartInventoryAI.Worker/        # Servi√ßo de background
 ?   ??? tests/
-?   ?   ??? SmartInventoryAI.Tests/         # Testes unit·rios
+?   ?   ??? SmartInventoryAI.Tests/         # Testes unit√°rios
 ?   ??? docker/                             # Docker Compose e Dockerfiles
 ??? .gitignore
 ??? README.md
 ```
 
-## ?? InÌcio R·pido
+## ?? In√≠cio R√°pido
 
-### PrÈ-requisitos
+### Pr√©-requisitos
 
 - [.NET 10.0 SDK](https://dotnet.microsoft.com/download)
 - [Docker](https://www.docker.com/get-started) e Docker Compose
@@ -57,7 +56,7 @@ reis-inventory/
 ### Executando com Docker
 
 ```bash
-# Clone o repositÛrio
+# Clone o reposit√≥rio
 git clone https://github.com/wellissonreis/ReisInventory.git
 cd ReisInventory
 
@@ -73,13 +72,13 @@ cd ../src/SmartInventoryAI.Api
 dotnet run
 ```
 
-A API estar· disponÌvel em:
+A API estar√° dispon√≠vel em:
 - ?? **Swagger UI**: http://localhost:5000
 - ?? **Jaeger UI**: http://localhost:16686
 
-## ?? DocumentaÁ„o
+## ?? Documenta√ß√£o
 
-Para documentaÁ„o detalhada sobre a arquitetura, endpoints e configuraÁ„o, consulte o [README do SmartInventoryAI](./SmartInventoryAI/README.md).
+Para documenta√ß√£o detalhada sobre a arquitetura, endpoints e configura√ß√£o, consulte o [README do SmartInventoryAI](./SmartInventoryAI/README.md).
 
 ## ?? Testes
 
@@ -88,19 +87,19 @@ cd SmartInventoryAI/tests/SmartInventoryAI.Tests
 dotnet test
 ```
 
-## ?? ContribuiÁ„o
+## ?? Contribui√ß√£o
 
-ContribuiÁıes s„o bem-vindas! Sinta-se ‡ vontade para abrir issues ou pull requests.
+Contribui√ß√µes s√£o bem-vindas! Sinta-se √† vontade para abrir issues ou pull requests.
 
 1. Fork o projeto
 2. Crie sua branch de feature (`git checkout -b feature/NovaFeature`)
-3. Commit suas mudanÁas (`git commit -m 'Add: nova feature'`)
+3. Commit suas mudan√ßas (`git commit -m 'Add: nova feature'`)
 4. Push para a branch (`git push origin feature/NovaFeature`)
 5. Abra um Pull Request
 
-## ?? LicenÁa
+## ?? Licen√ßa
 
-Este projeto est· sob a licenÁa MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+Este projeto est√° sob a licen√ßa MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ## ?? Autor
 
